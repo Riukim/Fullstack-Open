@@ -1,4 +1,4 @@
-mermaid
+```mermaid
 sequenceDiagram
     participant browser
     participant server
@@ -11,4 +11,4 @@ sequenceDiagram
     server-->>browser: HTTP status code 201 Created
     Note left of server: The server does not ask for a redirect, the browser stays on the same page
     deactivate server
-:::
+```
