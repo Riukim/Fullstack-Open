@@ -12,4 +12,4 @@
   - [Phonebook](Part2/phonebook)
   - [Course Info](Part2/courseinfo)
 - **Part 3**: [Programming a server with NodeJS and Express](Part3)  
-  -[Phonebook](Part3/phonebook)
+  - [Phonebook](Part3/phonebook)
