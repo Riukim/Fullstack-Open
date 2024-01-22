@@ -10,3 +10,6 @@
 - **Part 2**: [Communicating with server](Part2)
   - [Countries](Part2/countries)
   - [Phonebook](Part2/phonebook)
+  - [Course Info](Part2/courseinfo)
+- **Part 3**: [Programming a server with NodeJS and Express](Part3)  
+  - [Phonebook](Part3/phonebook)
