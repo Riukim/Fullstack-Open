@@ -1,3 +1,5 @@
-# Ignore .env file
+# Ignora la cartella node_modules
 node_modules
+
+# Ignore .env file
 .env
