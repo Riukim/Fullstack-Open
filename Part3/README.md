@@ -1,4 +1,4 @@
-# FullstackOpenPart3
-Part3 of Fullstack Open
+#Part3
 
-Link : https://render-test-8ywm.onrender.com/
+
+Link to Render deploy : https://render-test-8ywm.onrender.com/
