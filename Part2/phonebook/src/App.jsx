@@ -52,7 +52,7 @@ const App = () => {
 
       personService
         .update(person.id, updatePersonNumber)
-        .then(returnedPerson => {
+        .then((returnedPerson) => {
           setPersons(
             persons.map((person) =>
               person.id === returnedPerson.id ? returnedPerson : person
@@ -60,7 +60,7 @@ const App = () => {
           );
           setErrorMessage({
             text: `Number of ${newName} updated`,
-            type: 'notification'
+            type: "notification",
           });
           setTimeout(() => {
             setErrorMessage(null);
@@ -68,11 +68,11 @@ const App = () => {
           setNewName("");
           setNewNumber("");
         })
-        .catch(error => {
-          console.error("Error updating person:", error)
+        .catch((error) => {
+          console.error("Error updating person:", error);
           setErrorMessage({
             text: `Information of ${newName} has already been removed from server`,
-            type: 'error'
+            type: "error",
           });
           setTimeout(() => {
             setErrorMessage(null);
@@ -84,18 +84,29 @@ const App = () => {
         number: newNumber,
       };
 
-      personService.create(personObject).then((returnedPerson) => {
-        setPersons(persons.concat(returnedPerson));
-        setErrorMessage({
-          text:`Added ${newName} to Phonebook`,
-          type: 'notification'
+      personService
+        .create(personObject)
+        .then((returnedPerson) => {
+          setPersons(persons.concat(returnedPerson));
+          setErrorMessage({
+            text: `Added ${newName} to Phonebook`,
+            type: "notification",
           });
-        setTimeout(() => {
-          setErrorMessage(null);
-        }, 5000);
-        setNewName("");
-        setNewNumber("");
-      });
+          setTimeout(() => {
+            setErrorMessage(null);
+          }, 5000);
+          setNewName("");
+          setNewNumber("");
+        })
+        .catch((error) => {
+          setErrorMessage({
+            text: `${error.response.data.error}`,
+            type: "error",
+          });
+          setTimeout(() => {
+            setErrorMessage(null);
+          }, 5000);
+        });
     }
   };
 
@@ -127,13 +138,13 @@ const App = () => {
       />
 
       <h2>Numbers</h2>
-      <Persons 
-      persons={persons} 
-      search={search} 
-      setPersons={setPersons}
-      setErrorMessage={setErrorMessage}
-      setNewName={setNewName}
-      setNewNumber={setNewNumber} 
+      <Persons
+        persons={persons}
+        search={search}
+        setPersons={setPersons}
+        setErrorMessage={setErrorMessage}
+        setNewName={setNewName}
+        setNewNumber={setNewNumber}
       />
     </div>
   );
