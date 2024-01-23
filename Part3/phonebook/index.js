@@ -89,10 +89,6 @@ app.post("/api/persons", (request, response, next) => {
     return response.status(400).json({
       error: "Number is missing",
     })
-  }else if (!body.name && !body.number) {
-    return response.status(400).json({
-      error: "Number and Name are missing",
-    })
   }
   else{
     const person = new Person({
