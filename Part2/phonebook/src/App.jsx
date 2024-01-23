@@ -43,6 +43,7 @@ const App = () => {
       window.alert(`${newName} is already added to the phonebook`)
     }
     else if (checkName && checkName.number !== newPerson.number) {
+     
       if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
         
         personService
@@ -64,9 +65,9 @@ const App = () => {
             text: `${error.response.data.error}`,
             type: "error",
           })
-          setTimeout(() => {
+/*           setTimeout(() => {
             setErrorMessage(null)
-          }, 5000)
+          }, 5000) */
         })
       }
     }
@@ -90,9 +91,9 @@ const App = () => {
           text: `${error.response.data.error}`,
           type: "error",
         })
-        setTimeout(() => {
+/*         setTimeout(() => {
           setErrorMessage(null)
-        }, 5000)
+        }, 5000) */
       })
     }
 /*     const lowerCaseName = newName.toLowerCase();
