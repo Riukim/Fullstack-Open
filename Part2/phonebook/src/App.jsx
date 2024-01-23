@@ -34,7 +34,9 @@ const App = () => {
       number: newNumber
     }
 
-    const checkName = persons.find(props => props.name.toLowerCase() === newPerson.name.toLowerCase())
+    const lowerCaseName = newName.toLowerCase()
+
+    const checkName = persons.find(checkName => checkName.name.toLowerCase() === lowerCaseName)
     const updatePerson = { ...checkName, number: newNumber }
 
     if (checkName && checkName.number === newPerson.number) {
@@ -49,18 +51,22 @@ const App = () => {
           setPersons(persons.map(person => person.id !== checkName.id? person : returnedPerson))
           setNewName("")
           setNewNumber("")
+          setErrorMessage({
+            text: `Number of ${newName} updated`,
+            type: "notification",
+          })
           setTimeout(() => {
-            setErrorMessage({
-              text: `Number of ${newName} updated`,
-              type: "notification",
-            });
-          }, 5000);
+            setErrorMessage(null)
+          }, 5000)
         })
         .catch(error => {
           setErrorMessage({
-            text: `Information of ${newName} has already been removed from server`,
+            text: `${error.response.data.error}`,
             type: "error",
           })
+          setTimeout(() => {
+            setErrorMessage(null)
+          }, 5000)
         })
       }
     }
@@ -84,6 +90,9 @@ const App = () => {
           text: `${error.response.data.error}`,
           type: "error",
         })
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
       })
     }
 /*     const lowerCaseName = newName.toLowerCase();
