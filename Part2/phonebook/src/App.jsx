@@ -65,9 +65,9 @@ const App = () => {
             text: `${error.response.data.error}`,
             type: "error",
           })
-/*           setTimeout(() => {
+          setTimeout(() => {
             setErrorMessage(null)
-          }, 5000) */
+          }, 5000)
         })
       }
     }
@@ -91,9 +91,9 @@ const App = () => {
           text: `${error.response.data.error}`,
           type: "error",
         })
-/*         setTimeout(() => {
+        setTimeout(() => {
           setErrorMessage(null)
-        }, 5000) */
+        }, 5000)
       })
     }
 /*     const lowerCaseName = newName.toLowerCase();
