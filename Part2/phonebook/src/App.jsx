@@ -5,6 +5,7 @@ import Persons from "./components/Person";
 import PersonForm from "./components/PersonForm";
 import Filter from "./components/Filter";
 import Notification from "./components/Notification";
+/* import person from "../../../Part3/phonebook/models/person"; */
 
 const App = () => {
   /*   const [persons, setPersons] = useState([
@@ -28,16 +29,73 @@ const App = () => {
   const addPerson = (event) => {
     event.preventDefault();
 
-    const lowerCaseName = newName.toLowerCase();
+    const newPerson = {
+      name: newName,
+      number: newNumber
+    }
+
+    const checkName = persons.find(props => props.name.toLowerCase() === newPerson.name.toLowerCase())
+    const updatePerson = { ...checkName, number: newNumber }
+
+    if (checkName && checkName.number === newPerson.number) {
+      window.alert(`${newName} is already added to the phonebook`)
+    }
+    else if (checkName && checkName.number !== newPerson.number) {
+      if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
+        
+        personService
+        .update(checkName.id, updatePerson)
+        .then(returnedPerson => {
+          setPersons(persons.map(person => person.id !== checkName.id? person : returnedPerson))
+          setNewName("")
+          setNewNumber("")
+          setTimeout(() => {
+            setErrorMessage({
+              text: `Number of ${newName} updated`,
+              type: "notification",
+            });
+          }, 5000);
+        })
+        .catch(error => {
+          setErrorMessage({
+            text: `Information of ${newName} has already been removed from server`,
+            type: "error",
+          })
+        })
+      }
+    }
+    else {
+      personService
+      .create(newPerson)
+      .then(returnedPerson => {
+        setPersons(persons.concat(returnedPerson))
+        setNewName("")
+        setNewNumber("")
+        setErrorMessage({
+          text: `Added ${newName} to Phonebook`,
+          type: "notification",
+        })
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
+      })
+      .catch(error => {
+        setErrorMessage({
+          text: `${error.response.data.error}`,
+          type: "error",
+        })
+      })
+    }
+/*     const lowerCaseName = newName.toLowerCase();
     const person = persons.find(
       (person) => person.name.toLowerCase() === lowerCaseName
     );
     const updatePersonNumber = { ...person, number: newNumber };
 
-    /*if (persons.some((person) => person.name.toLowerCase() === lowerCaseName)) {
+    if (persons.some((person) => person.name.toLowerCase() === lowerCaseName)) {
       alert(`${newName} is already added to the phonebook`);
       return;
-    } */
+    }
 
     if (person) {
       const confirm = window.confirm(
@@ -107,7 +165,7 @@ const App = () => {
             setErrorMessage(null);
           }, 5000);
         });
-    }
+    } */
   };
 
   const handleNameChange = (event) => {
