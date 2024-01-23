@@ -1,55 +1,55 @@
-const mongoose = require("mongoose");
+const mongoose = require("mongoose")
 
 if (process.argv.length < 3) {
-  console.log("Usage: node mongo.js password name number");
-  console.log("To display all of the entries in the phonebook: node mongo.js password");
-  process.exit(1);
+	console.log("Usage: node mongo.js password name number")
+	console.log("To display all of the entries in the phonebook: node mongo.js password")
+	process.exit(1)
 }
 
 if (process.argv.length === 5) {
-  const password = process.argv[2];
+	const password = process.argv[2]
 
-  const url = `mongodb+srv://mcominelli29:${password}@phonebook.p7alqqs.mongodb.net/phonebookApp?retryWrites=true&w=majority`;
+	const url = `mongodb+srv://mcominelli29:${password}@phonebook.p7alqqs.mongodb.net/phonebookApp?retryWrites=true&w=majority`
 
-  mongoose.set("strictQuery", false);
-  mongoose.connect(url);
+	mongoose.set("strictQuery", false)
+	mongoose.connect(url)
 
-  const personSchema = new mongoose.Schema({
-    name: String,
-    number: String,
-  });
+	const personSchema = new mongoose.Schema({
+		name: String,
+		number: String,
+	})
 
-  const Person = mongoose.model("Person", personSchema);
+	const Person = mongoose.model("Person", personSchema)
 
-  const person = new Person({
-    name: process.argv[3],
-    number: process.argv[4],
-  });
+	const person = new Person({
+		name: process.argv[3],
+		number: process.argv[4],
+	})
 
-  person.save().then((result) => {
-    console.log("person saved!");
-    mongoose.connection.close();
-  });
+	person.save().then(() => {
+		console.log("person saved!")
+		mongoose.connection.close()
+	})
 }
 
 if (process.argv.length === 3) {
-  const password = process.argv[2];
+	const password = process.argv[2]
 
-  const url = `mongodb+srv://mcominelli29:${password}@phonebook.p7alqqs.mongodb.net/phonebookApp?retryWrites=true&w=majority`;
+	const url = `mongodb+srv://mcominelli29:${password}@phonebook.p7alqqs.mongodb.net/phonebookApp?retryWrites=true&w=majority`
 
-  mongoose.set("strictQuery", false);
-  mongoose.connect(url);
+	mongoose.set("strictQuery", false)
+	mongoose.connect(url)
 
-  const personSchema = new mongoose.Schema({
-    name: String,
-    number: String,
-  });
+	const personSchema = new mongoose.Schema({
+		name: String,
+		number: String,
+	})
 
-  const Person = mongoose.model("Person", personSchema);
-  Person.find({}).then((result) => {
-    result.forEach((person) => {
-      console.log(person.name, person.number);
-    });
-    mongoose.connection.close();
-  });
+	const Person = mongoose.model("Person", personSchema)
+	Person.find({}).then((result) => {
+		result.forEach((person) => {
+			console.log(person.name, person.number)
+		})
+		mongoose.connection.close()
+	})
 }
