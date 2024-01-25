@@ -13,3 +13,5 @@
   - [Course Info](Part2/courseinfo)
 - **Part 3**: [Programming a server with NodeJS and Express](Part3)  
   - [Phonebook](Part3/phonebook)
+- **Part 4**: [Testing Express servers, user administration](Part4)  
+  - [Bloglist](Part4/bloglist)
