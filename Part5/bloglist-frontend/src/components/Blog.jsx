@@ -5,8 +5,8 @@ import "./styles.css"
 const Blog = ({ blog, updateBlog, deleteBlog, username }) => {
 
   const [userLikes, setLikes] = useState(blog.likes || 0)
-  
-/*   const updatedBlog ={
+
+  /*   const updatedBlog ={
     title: blog.title,
     author: blog.author,
     url: blog.url,
@@ -44,12 +44,12 @@ const Blog = ({ blog, updateBlog, deleteBlog, username }) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
-    border: 'solid',
+    border: "solid",
     borderWidth: 1,
     marginBottom: 5
   }
 
-  
+
   return(
     <div style={blogStyle}>
       <b>Title:</b> {blog.title}
@@ -59,19 +59,19 @@ const Blog = ({ blog, updateBlog, deleteBlog, username }) => {
 
         <b>URL:</b> {blog.url} <br />
 
-        <b>Likes:</b> {blog.likes} 
-          <button onClick={addLike}>
+        <b>Likes:</b> {blog.likes}
+        <button onClick={addLike}>
             Add Like
-          </button><br />
+        </button><br />
 
         {blog.user && blog.user.name && (
           <><b>User:</b> {blog.user.name}</>
         )} <br />
         {blog.user && blog.user.username && blog.user.username === username && (
-        <button className="removeButton" onClick={() => deleteBlog(blog.id, blog)}>Remove</button>
+          <button className="removeButton" onClick={() => deleteBlog(blog.id, blog)}>Remove</button>
         )}
       </Togglable>
-    </div> 
+    </div>
   )}
 
 export default Blog

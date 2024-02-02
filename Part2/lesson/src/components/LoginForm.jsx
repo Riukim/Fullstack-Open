@@ -1,4 +1,5 @@
-import { useState } from "react"
+import { useState } from 'react'
+import PropTypes from 'prop-types'
 
 const LoginForm = ({ handleSubmit }) => {
   const [username, setUsername] = useState('')
@@ -6,48 +7,54 @@ const LoginForm = ({ handleSubmit }) => {
   const [errorMessage, setErrorMessage] = useState('')
 
   const handleUsernameChange = (event) => {
-    setUsername(event.target.value);
+    setUsername(event.target.value)
   }
 
   const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
+    setPassword(event.target.value)
   }
 
   const handleLogin = async (event) => {
-    event.preventDefault();
+    event.preventDefault()
 
     try {
-      await handleSubmit(username, password);
+      await handleSubmit(username, password)
     } catch (error) {
-      setErrorMessage('Wrong credentials');
+      setErrorMessage('Wrong credentials')
     }
   }
 
- return (
-   <div>
-     <h2>Login</h2>
+  return (
+    <div>
+      <h2>Login</h2>
 
-     <form onSubmit={handleLogin}>
-       <div>
+      <form onSubmit={handleLogin}>
+        <div>
          username
-         <input
-           value={username}
-           onChange={handleUsernameChange}
-         />
-       </div>
-       <div>
+          <input
+            value={username}
+            onChange={handleUsernameChange}
+          />
+        </div>
+        <div>
          password
-         <input
-           type="password"
-           value={password}
-           onChange={handlePasswordChange}
-         />
-     </div>
-       <button type="submit">login</button>
-     </form>
-     {errorMessage && <p>{errorMessage}</p>}
-   </div>
- )
+          <input
+            type="password"
+            value={password}
+            onChange={handlePasswordChange}
+          />
+        </div>
+        <button type="submit">login</button>
+      </form>
+      {errorMessage && <p>{errorMessage}</p>}
+    </div>
+  )
+}
+
+LoginForm.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+  handleUsernameChange: PropTypes.func.isRequired,
+  handlePasswordChange: PropTypes.func.isRequired
 }
 
 export default LoginForm

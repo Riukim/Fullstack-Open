@@ -13,7 +13,7 @@ const App = () => {
   const [newNote, setNewNote] = useState('')
   const [showAll, setShowAll] = useState(true)
   const [errorMessage, setErrorMessage] = useState(null)
-  const [username, setUsername] = useState('') 
+  const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
   const [loginVisible, setLoginVisible] = useState(false)
@@ -40,7 +40,7 @@ const App = () => {
     noteFormRef.current.toggleVisibility()
     noteService
       .create(noteObject)
-        .then(returnedNote => {
+      .then(returnedNote => {
         setNotes(notes.concat(returnedNote))
         setNewNote('')
       })
@@ -51,15 +51,15 @@ const App = () => {
           setErrorMessage(null)
         }, 5000)
       })
-    }
-  
+  }
+
   const toggleImportanceOf = id => {
     const note = notes.find(n => n.id === id)
     const changedNote = { ...note, important: !note.important }
-  
+
     noteService
       .update(id, changedNote)
-        .then(returnedNote => {
+      .then(returnedNote => {
         setNotes(notes.map(note => note.id !== id ? note : returnedNote))
       })
       .catch(error => {
@@ -72,12 +72,12 @@ const App = () => {
       })
   }
 
-/*   const handleNoteChange = (event) => {
+  /*   const handleNoteChange = (event) => {
     setNewNote(event.target.value)
   } */
-  
+
   const handleLogin = async (username, password) => {
-    
+
     try {
       const user = await loginService.login({
         username, password,
@@ -85,7 +85,7 @@ const App = () => {
 
       window.localStorage.setItem(
         'loggedNoteappUser', JSON.stringify(user)
-      ) 
+      )
       noteService.setToken(user.token)
       setUser(user)
 
@@ -140,24 +140,24 @@ const App = () => {
 
       <Notification message={errorMessage} />
 
-      {!user && loginForm()} 
+      {!user && loginForm()}
       {user && <div>
         <p>{user.name} logged in <br />
           <button onClick={handleLogout}>
             logout
           </button>
         </p>
-          {noteForm()}
-        </div>
+        {noteForm()}
+      </div>
       }
 
       <div>
         <button onClick={() => setShowAll(!showAll)}>
           show {showAll ? 'important' : 'all' }
         </button>
-      </div>      
+      </div>
       <ul>
-        {notesToShow.map(note => 
+        {notesToShow.map(note =>
           <Note
             key={note.id}
             note={note}
