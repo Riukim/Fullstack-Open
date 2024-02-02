@@ -1,0 +1,11 @@
+.removeButton {
+    cursor: pointer;
+    color: black;
+    transition: color 0.5s ease-in-out;
+  }
+  
+.removeButton:hover {
+    background-color: red;
+    transition: color 0.5s ease-in-out;
+}
+  

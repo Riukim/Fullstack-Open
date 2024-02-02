@@ -8,8 +8,9 @@ const setToken = newToken => {
 }
 
 const getAll = async () => {
-  const request = axios.get(baseUrl)
-  return await request.then(response => response.data)
+    const response = await axios.get(baseUrl);
+    return response.data;
+
 }
 
 const create = async newObject => {
@@ -17,8 +18,25 @@ const create = async newObject => {
     headers: { Authorization: token }
   }
 
+  /* console.log('Dati inviati al backend:', newObject) */
+  
   const response = await axios.post(baseUrl, newObject, config)
   return response.data
 }
 
-export default { getAll, setToken, create }
+const update = async (id, newObject) => {
+  const config = {
+    headers: { Authorization: token }
+  }
+  const response = axios.put(`${baseUrl}/${id}`, newObject, config)
+  return response.data
+}
+
+const deleteBlog = async (id) => {
+  const config = {
+    headers: { Authorization: token }
+  }
+  await axios.delete(`${baseUrl}/${id}`, config)
+}
+ 
+export default { getAll, setToken, create, update, deleteBlog }
