@@ -15,3 +15,5 @@
   - [Phonebook](Part3/phonebook)
 - **Part 4**: [Testing Express servers, user administration](Part4)  
   - [Bloglist](Part4/bloglist)
+- **Part 5**: [Testing React apps](Part5)  
+  - [Bloglist-Frontend](Part5/bloglist-frontend)
