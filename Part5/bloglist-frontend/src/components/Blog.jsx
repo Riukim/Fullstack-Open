@@ -33,15 +33,15 @@ const Blog = ({ blog, updateBlog, deleteBlog, username }) => {
   return(
     <div  className="blog" style={blogStyle}>
 
-      <b>Title:</b> {blog.title} <br />
-      <b>Author:</b> {blog.author} <br />
+      <span className="title">Title: {blog.title}</span> <br />
+      <span className="author">Author: {blog.author}</span> <br />
 
       <Togglable buttonLabel="view" buttonLabel2="hide">
 
-        <b>URL:</b> {blog.url} <br />
+        <span className="blogURL">URL: {blog.url} </span> <br />
 
-        <b>Likes:</b> {blog.likes}
-        <button onClick={addLike}>Add Like</button><br />
+        <span className="blogLikes">Likes: {blog.likes} </span>
+        <button onClick={addLike}>Add Like</button> <br />
 
         {blog.user && blog.user.name && (
           <><b>User:</b> {blog.user.name}</>
