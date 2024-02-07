@@ -18,4 +18,5 @@
 - **Part 5**: [Testing React apps](Part5)  
   - [Bloglist-Frontend](Part5/bloglist-frontend)
 - **Part 6**: [Advanced state management](Part6)
-  - [Lesson](Part6/counter)  
+  - [Lesson](Part6/counter)
+  - [Unicafe-Redux](Part6/unicafe-redux)  
