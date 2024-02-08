@@ -19,4 +19,5 @@
   - [Bloglist-Frontend](Part5/bloglist-frontend)
 - **Part 6**: [Advanced state management](Part6)
   - [Lesson](Part6/counter)
-  - [Unicafe-Redux](Part6/unicafe-redux)  
+  - [Unicafe-Redux](Part6/unicafe-redux)
+  - [Redux-Anecdotes](Part6/redux-anecdotes)
