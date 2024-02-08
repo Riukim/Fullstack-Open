@@ -5,12 +5,17 @@ import { orderBy } from "lodash"
 const AnecdotesList = () => {
 
   const dispatch = useDispatch()
-  const anecdotes = useSelector((state) => state)
-  const orderedAnecdotes = orderBy(anecdotes, ["votes"], ["desc"])
+  const anecdotes = useSelector(({ filter, anecdotes }) => {
+    const lowercaseFilter = filter.toLowerCase();
+    const filteredAnecdotes = anecdotes.filter((anecdote) =>
+      anecdote.content.toLowerCase().includes(lowercaseFilter)
+    );
+    return orderBy(filteredAnecdotes, ["votes"], ["desc"]);
+  });
   
   return (
     <div>
-      {orderedAnecdotes.map((anecdote) => (
+      {anecdotes.map((anecdote) => (
         <div key={anecdote.id}>
           <div>{anecdote.content}</div>
           <div>
