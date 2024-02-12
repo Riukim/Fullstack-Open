@@ -12,7 +12,13 @@ const AnecdoteForm = () => {
     onSuccess: (newAnecdote) => {
       const anecdotes = queryClient.getQueryData(["anecdotes"])
       queryClient.setQueryData(["anecdotes"], anecdotes.concat(newAnecdote))
-    }
+    },
+    onError: () => {
+      dispatch({type: "ERROR"})
+      setTimeout(() => {
+        dispatch({type: "NULL"})
+      }, 5000);
+    } //nedd to use callback function ex 6.24
   })
 
   const onCreate = async (event) => {
