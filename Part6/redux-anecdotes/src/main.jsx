@@ -2,6 +2,12 @@ import ReactDOM from 'react-dom/client'
 import { Provider } from 'react-redux'
 import App from './App'
 import store from './store'
+import anecdoteService from "./services/anecdotes"
+import { setAnecdote}  from './reducers/anecdoteReducer'
+
+anecdoteService.getAll().then(anecdotes => 
+  store.dispatch(setAnecdote(anecdotes))
+)
 
 console.log(store.getState())
 
