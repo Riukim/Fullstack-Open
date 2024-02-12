@@ -21,3 +21,5 @@
   - [Lesson](Part6/counter)
   - [Unicafe-Redux](Part6/unicafe-redux)
   - [Redux-Anecdotes](Part6/redux-anecdotes)
+  - [Query-Notes](Part6/query-notes)
+  - [Query-Anecdotes](Part6/query-anecdotes)
