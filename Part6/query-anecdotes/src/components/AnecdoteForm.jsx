@@ -18,7 +18,7 @@ const AnecdoteForm = () => {
       setTimeout(() => {
         dispatch({type: "NULL"})
       }, 5000);
-    } //nedd to use callback function ex 6.24
+    }
   })
 
   const onCreate = async (event) => {

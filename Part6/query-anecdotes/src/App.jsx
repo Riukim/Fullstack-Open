@@ -8,7 +8,11 @@ const App = () => {
   const queryClient = useQueryClient()
   const dispatch = useNotificationDispatch()
   
-  const result = useQuery({
+  const {
+    isPending,
+    isError,
+    data: anecdotes
+  } = useQuery({
     queryKey: ["anecdotes"],
     queryFn: getAnecdotes,
     refetchOnWindowFocus: false,
@@ -30,15 +34,15 @@ const App = () => {
     }, 5000);
   }
 
-  if (result.isPending) {
+  if (isPending) {
     return <div>Loading data...</div>
   }
 
-  if (result.isError) {
-    return <div>Error: {result.error.message}</div>
+  if (isError) {
+    return <div>Error: {anecdotes.error.message}</div>
   }
 
-  const anecdotes = result.data
+  const sortedAnecdotes = [...anecdotes].sort((a, b) => b.votes - a.votes)
 
   return (
     <div>
@@ -47,7 +51,7 @@ const App = () => {
       <Notification />
       <AnecdoteForm />
     
-      {anecdotes.map(anecdote =>
+      {sortedAnecdotes.map(anecdote =>
         <div key={anecdote.id}>
           <div>
             {anecdote.content}
