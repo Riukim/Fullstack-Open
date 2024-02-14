@@ -26,3 +26,4 @@
 - **Part 7**: [React router, custom hooks, styling app with CSS and webpack](Part7)
   - [Lesson](Part7/lesson)
   - [Routed-Anecdotes](Part7/routed-anecdotes)
+  - [Country-Hooks](Part7/country-hooks)
