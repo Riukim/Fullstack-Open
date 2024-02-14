@@ -7,11 +7,16 @@ const useField = (type) => {
   const onChange = (event) => {
     setValue(event.target.value)
   }
+  
+  const onReset = () => {
+    setValue("")
+  }
 
   return {
     type,
     value,
-    onChange
+    onChange,
+    onReset
   }
 }
 
@@ -57,14 +62,17 @@ const App = () => {
   const [notes, noteService] = useResource('http://localhost:3005/notes')
   const [persons, personService] = useResource('http://localhost:3005/persons')
 
-  const handleNoteSubmit = (event) => {
+  const handleNoteSubmit = async (event) => {
     event.preventDefault()
-    noteService.create({ content: content.value })
+    await noteService.create({ content: content.value })
+    content.onReset()
   }
  
-  const handlePersonSubmit = (event) => {
+  const handlePersonSubmit = async (event) => {
     event.preventDefault()
-    personService.create({ name: name.value, number: number.value})
+    await personService.create({ name: name.value, number: number.value})
+    name.onReset()
+    number.onReset()
   }
 
   return (
