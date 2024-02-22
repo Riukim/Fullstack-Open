@@ -3,6 +3,9 @@ import Blog from "./components/Blog"
 import blogService from "./services/blogs"
 import loginService from "./services/login"
 import storageService from "./services/storage"
+import { useDispatch, useSelector } from "react-redux"
+import { createNotification } from "./reducers/notificationReducer"
+import { initializeBlogs, removeBlog } from "./reducers/blogReducer"
 
 import LoginForm from "./components/Login"
 import NewBlog from "./components/NewBlog"
@@ -10,9 +13,10 @@ import Notification from "./components/Notification"
 import Togglable from "./components/Togglable"
 
 const App = () => {
-  const [blogs, setBlogs] = useState([])
+  const blogs = useSelector((state) => state.blogs)
   const [user, setUser] = useState("")
-  const [info, setInfo] = useState({ message: null })
+
+  const dispatch = useDispatch()
 
   const blogFormRef = useRef()
 
@@ -22,67 +26,42 @@ const App = () => {
   }, [])
 
   useEffect(() => {
-    blogService.getAll().then((blogs) => setBlogs(blogs))
-  }, [])
-
-  const notifyWith = (message, type = "info") => {
-    setInfo({
-      message,
-      type,
-    })
-
-    setTimeout(() => {
-      setInfo({ message: null })
-    }, 3000)
-  }
+    dispatch(initializeBlogs())
+  }, [dispatch])
 
   const login = async (username, password) => {
     try {
       const user = await loginService.login({ username, password })
       setUser(user)
       storageService.saveUser(user)
-      notifyWith("welcome!")
+      dispatch(createNotification(`Welcome back, ${user.username}!`, "success", 5))
     } catch (e) {
-      notifyWith("wrong username or password", "error")
+      dispatch(createNotification("wrong username or password", "error", 5))
     }
   }
 
   const logout = async () => {
     setUser(null)
     storageService.removeUser()
-    notifyWith("logged out")
+    dispatch(createNotification("logged out", "success", 5))
   }
 
-  const createBlog = async (newBlog) => {
-    const createdBlog = await blogService.create(newBlog)
-    notifyWith(`A new blog '${newBlog.title}' by '${newBlog.author}' added`)
-    setBlogs(blogs.concat(createdBlog))
-    blogFormRef.current.toggleVisibility()
-  }
-
-  const like = async (blog) => {
-    const blogToUpdate = { ...blog, likes: blog.likes + 1, user: blog.id }
-    const updatedBlog = await blogService.update(blogToUpdate)
-    notifyWith(`A like for the blog '${blog.title}' by '${blog.author}'`)
-    setBlogs(blogs.map((b) => (b.id === blog.id ? updatedBlog : b)))
-  }
-
-  const remove = async (blog) => {
+  /*   const remove = async (blog) => {
     const ok = window.confirm(
       `Sure you want to remove '${blog.title}' by ${blog.author}`
     )
     if (ok) {
       await blogService.remove(blog.id)
-      notifyWith(`The blog' ${blog.title}' by '${blog.author} removed`)
-      setBlogs(blogs.filter((b) => b.id !== blog.id))
+      dispatch(createNotification(`The blog' ${blog.title}' by '${blog.author} removed`, "error", 5))
+      dispatch(removeBlog(blog.id))
     }
-  }
+  } */
 
   if (!user) {
     return (
       <div>
         <h2>log in to application</h2>
-        <Notification info={info} />
+        <Notification />
         <LoginForm login={login} />
       </div>
     )
@@ -93,24 +72,27 @@ const App = () => {
   return (
     <div>
       <h2>blogs</h2>
-      <Notification info={info} />
+      <Notification />
       <div>
         {user.name} logged in
         <button onClick={logout}>logout</button>
       </div>
-      <Togglable buttonLabel="new note" ref={blogFormRef}>
-        <NewBlog createBlog={createBlog} />
+      <Togglable buttonLabel="new blog" ref={blogFormRef}>
+        <NewBlog />
       </Togglable>
       <div>
-        {blogs.sort(byLikes).map((blog) => (
-          <Blog
-            key={blog.id}
-            blog={blog}
-            like={() => like(blog)}
-            canRemove={user && blog.user && blog.user.username === user.username}
-            remove={() => remove(blog)}
-          />
-        ))}
+        {blogs
+          .slice()
+          .sort(byLikes)
+          .map((blog) => (
+            <Blog
+              key={blog.id}
+              blog={blog}
+              canRemove={
+                user && blog.user && blog.user.username === user.username
+              }
+            />
+          ))}
       </div>
     </div>
   )

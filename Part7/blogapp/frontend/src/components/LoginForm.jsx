@@ -1,12 +1,16 @@
 import { useState } from "react"
+import { useDispatch } from "react-redux"
+import { createNotification } from "../reducers/notificationReducer"
 
 const LoginForm = ({ onLogin }) => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
+  const dispatch = useDispatch()
 
   const handleSubmit = (event) => {
     event.preventDefault()
     onLogin(username, password)
+    /* dispatch(createNotification(`Welcome ${username}!`, "success", 5)) */
   }
 
   return (

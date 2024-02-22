@@ -14,6 +14,7 @@
     "test:e2e": "cypress run"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.2.1",
     "axios": "^1.6.7",
     "cors": "^2.8.5",
     "react": "^18.2.0",
