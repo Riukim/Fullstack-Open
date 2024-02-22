@@ -5,7 +5,8 @@ import loginService from "./services/login"
 import storageService from "./services/storage"
 import { useDispatch, useSelector } from "react-redux"
 import { createNotification } from "./reducers/notificationReducer"
-import { initializeBlogs, removeBlog } from "./reducers/blogReducer"
+import { initializeBlogs } from "./reducers/blogReducer"
+import { useUser } from "./UserContext"
 
 import LoginForm from "./components/Login"
 import NewBlog from "./components/NewBlog"
@@ -14,55 +15,28 @@ import Togglable from "./components/Togglable"
 
 const App = () => {
   const blogs = useSelector((state) => state.blogs)
-  const [user, setUser] = useState("")
+  const user = useUser()
 
   const dispatch = useDispatch()
 
   const blogFormRef = useRef()
 
   useEffect(() => {
-    const user = storageService.loadUser()
-    setUser(user)
-  }, [])
-
-  useEffect(() => {
     dispatch(initializeBlogs())
   }, [dispatch])
 
-  const login = async (username, password) => {
-    try {
-      const user = await loginService.login({ username, password })
-      setUser(user)
-      storageService.saveUser(user)
-      dispatch(createNotification(`Welcome back, ${user.username}!`, "success", 5))
-    } catch (e) {
-      dispatch(createNotification("wrong username or password", "error", 5))
-    }
-  }
-
-  const logout = async () => {
-    setUser(null)
+  const handleLogout = async () => {
+    dispatch.logout()
     storageService.removeUser()
     dispatch(createNotification("logged out", "success", 5))
   }
-
-  /*   const remove = async (blog) => {
-    const ok = window.confirm(
-      `Sure you want to remove '${blog.title}' by ${blog.author}`
-    )
-    if (ok) {
-      await blogService.remove(blog.id)
-      dispatch(createNotification(`The blog' ${blog.title}' by '${blog.author} removed`, "error", 5))
-      dispatch(removeBlog(blog.id))
-    }
-  } */
 
   if (!user) {
     return (
       <div>
         <h2>log in to application</h2>
         <Notification />
-        <LoginForm login={login} />
+        <LoginForm />
       </div>
     )
   }
@@ -75,7 +49,7 @@ const App = () => {
       <Notification />
       <div>
         {user.name} logged in
-        <button onClick={logout}>logout</button>
+        <button onClick={handleLogout}>logout</button>
       </div>
       <Togglable buttonLabel="new blog" ref={blogFormRef}>
         <NewBlog />

@@ -1,16 +1,18 @@
 import { useState } from "react"
 import { useDispatch } from "react-redux"
-import { createNotification } from "../reducers/notificationReducer"
+import { useUserDispatch } from "../UserContext"
 
-const LoginForm = ({ onLogin }) => {
+const LoginForm = () => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
-  const dispatch = useDispatch()
+  const dispatch = useUserDispatch()
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    onLogin(username, password)
-    /* dispatch(createNotification(`Welcome ${username}!`, "success", 5)) */
+    dispatch({
+      type: "LOGIN",
+      payload: { username, password }
+    })
   }
 
   return (

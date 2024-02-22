@@ -1,12 +1,17 @@
 import { useState } from "react"
+import { useUserDispatch } from "../UserContext"
 
 const LoginForm = ({ login }) => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
+  const dispatch = useUserDispatch()
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault()
-    await login(username, password)
+    dispatch({
+      type: "LOGIN",
+      payload: { username, password },
+    })
   }
 
   return (
