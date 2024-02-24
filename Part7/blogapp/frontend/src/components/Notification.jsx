@@ -18,6 +18,7 @@ const Notification = () => {
   }
 
   return <div style={style}>{info.message}</div>
+
 }
 
 export default Notification

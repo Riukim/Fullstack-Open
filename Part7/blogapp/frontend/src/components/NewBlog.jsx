@@ -2,6 +2,7 @@ import { useState } from "react"
 import { createNotification } from "../reducers/notificationReducer"
 import { useDispatch } from "react-redux"
 import { createBlog } from "../reducers/blogReducer"
+import { Form, Button, Container } from "react-bootstrap"
 
 const BlogForm = () => {
   const [title, setTitle] = useState("")
@@ -19,7 +20,7 @@ const BlogForm = () => {
     }
 
     dispatch(createBlog(newBlog))
-    dispatch(createNotification(`New blog added ${newBlog.title}`, "success ", 5))
+    dispatch(createNotification(`New blog added ${newBlog.title}`, "success ", 3))
 
     setTitle("")
     setAuthor("")
@@ -28,40 +29,45 @@ const BlogForm = () => {
   }
 
   return (
-    <div>
+    <Container>
       <h4>Create a new blog</h4>
 
-      <form onSubmit={addBlog}>
-        <div>
-          title
-          <input
+      <Form onSubmit={addBlog}>
+        <Form.Group>
+          <Form.Label>title:</Form.Label>
+          <Form.Control
             id="title"
             placeholder="title"
             value={title}
             onChange={(event) => setTitle(event.target.value)}
+            style={{ width: "300px" }}
           />
-        </div>
-        <div>
-          author
-          <input
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>author</Form.Label>
+          <Form.Control
             id="author"
             placeholder="author"
             value={author}
             onChange={(event) => setAuthor(event.target.value)}
+            style={{ width: "300px" }}
           />
-        </div>
-        <div>
-          url
-          <input
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>url</Form.Label>
+          <Form.Control
             id="url"
             placeholder="url"
             value={url}
             onChange={(event) => setUrl(event.target.value)}
+            style={{ width: "300px" }}
           />
-        </div>
-        <button type="submit">create</button>
-      </form>
-    </div>
+        </Form.Group>
+        <Button type="submit" style={{ margin: "10px" }}>
+          create
+        </Button>
+      </Form>
+    </Container>
   )
 }
 

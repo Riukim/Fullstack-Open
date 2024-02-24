@@ -21,7 +21,6 @@ describe("Blog", () => {
         blog={blog}
         remove={jest.fn()}
         canRemove={true}
-        like={likeHandler}
       />
     )
   })

@@ -1,19 +1,20 @@
 import { createContext, useContext, useReducer, useEffect } from "react"
+import storageService from "./services/storage"
+import userService from "./services/login"
 
 const userReducer = (state, action) => {
   switch (action.type) {
   case "LOGIN":
     return {
       ...state,
-      user: action.payload
+      user: action.payload,
     }
 
   case "LOGOUT":
     return {
       ...state,
-      user: null
+      user: null,
     }
-
 
   default:
     return state
@@ -24,29 +25,42 @@ const UserContext = createContext()
 
 export const UserProvider = ({ children }) => {
   const initialState = {
-    user: null
+    user: null,
   }
 
   const [state, dispatch] = useReducer(userReducer, initialState)
 
   useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem("loggedBlogAppUser")
-    if (loggedUserJSON) {
-      const user = JSON.parse(loggedUserJSON)
+    const loggedUser = storageService.loadUser()
+    /* console.log(loggedUser) */
+    if (loggedUser) {
       dispatch({
         type: "LOGIN",
-        payload: user
+        payload: loggedUser,
       })
     }
   }, [])
 
+  const login = async (credentials) => {
+    try {
+      const user = await userService.login(credentials)
+      storageService.saveUser(user)
+      dispatch({
+        type: "LOGIN",
+        payload: user
+      })
+    } catch (error) {
+      console.error("Login failed:", error)
+    }
+  }
+
   const logout = () => {
-    localStorage.removeItem("loggedBlogAppUser")
+    storageService.removeUser()
     dispatch({ type: "LOGOUT" })
   }
 
   return (
-    <UserContext.Provider value={{ state, dispatch, logout }}>
+    <UserContext.Provider value={{ state, dispatch, login, logout }}>
       {children}
     </UserContext.Provider>
   )
@@ -59,8 +73,5 @@ export const useUser = () => {
 
 export const useUserDispatch = () => {
   const { dispatch } = useContext(UserContext)
-  return dispatch
+  return { dispatch, login: useContext(UserContext).login, logout: useContext(UserContext).logout }
 }
-
-
-

@@ -1,13 +1,20 @@
-import { useState, useEffect, useRef } from "react"
-import Blog from "./components/Blog"
-import blogService from "./services/blogs"
-import loginService from "./services/login"
-import storageService from "./services/storage"
+import { useEffect, useRef } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { createNotification } from "./reducers/notificationReducer"
 import { initializeBlogs } from "./reducers/blogReducer"
-import { useUser } from "./UserContext"
+import { useUser, useUserDispatch } from "./UserContext"
+import {
+  Routes,
+  Route,
+  Link,
+  Navigate,
+  useNavigate,
+  useMatch
+} from "react-router-dom"
+import { Button } from "react-bootstrap"
 
+
+import Blog from "./components/Blog"
 import LoginForm from "./components/Login"
 import NewBlog from "./components/NewBlog"
 import Notification from "./components/Notification"
@@ -18,6 +25,7 @@ const App = () => {
   const user = useUser()
 
   const dispatch = useDispatch()
+  const userDispatch = useUserDispatch()
 
   const blogFormRef = useRef()
 
@@ -26,16 +34,13 @@ const App = () => {
   }, [dispatch])
 
   const handleLogout = async () => {
-    dispatch.logout()
-    storageService.removeUser()
-    dispatch(createNotification("logged out", "success", 5))
+    userDispatch.logout()
+    dispatch(createNotification(`${user.name} logged out`, "success", 3))
   }
 
   if (!user) {
     return (
-      <div>
-        <h2>log in to application</h2>
-        <Notification />
+      <div className="container">
         <LoginForm />
       </div>
     )
@@ -44,12 +49,12 @@ const App = () => {
   const byLikes = (b1, b2) => b2.likes - b1.likes
 
   return (
-    <div>
+    <div className="container">
       <h2>blogs</h2>
       <Notification />
       <div>
         {user.name} logged in
-        <button onClick={handleLogout}>logout</button>
+        <Button onClick={handleLogout}>logout</Button>
       </div>
       <Togglable buttonLabel="new blog" ref={blogFormRef}>
         <NewBlog />

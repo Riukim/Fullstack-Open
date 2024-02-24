@@ -4,13 +4,16 @@ import App from "./App"
 import store from "./store"
 import { Provider } from "react-redux"
 import { UserProvider } from "./UserContext"
+import { BrowserRouter as Router } from "react-router-dom"
 
 console.log(store.getState())
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
-    <UserProvider>
-      <App />
-    </UserProvider>
+    <Router>
+      <UserProvider>
+        <App />
+      </UserProvider>
+    </Router>
   </Provider>
 )
