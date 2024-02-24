@@ -30,7 +30,7 @@ const LoginForm = () => {
     handleLogin({ username, password })
     setUsername("")
     setPassword("")
-    navigate("/")
+    navigate("/Blogs")
   }
 
   return (

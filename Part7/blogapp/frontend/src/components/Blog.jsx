@@ -40,27 +40,29 @@ const Blog = ({ blog, canRemove }) => {
   return (
     <Table striped>
       <tbody>
-        <div style={style} className="blog">
-          {blog.title} {blog.author}
-          <button onClick={() => setVisible(!visible)}>
-            {visible ? "hide" : "show"}
-          </button>
-          {visible && (
-            <div>
+        <tr>
+          <div style={style} className="blog">
+            {blog.title} {blog.author}
+            <Button onClick={() => setVisible(!visible)}>
+              {visible ? "hide" : "show"}
+            </Button>
+            {visible && (
               <div>
-                <a href={blog.url}> {blog.url}</a>
+                <tr>
+                  <a href={blog.url}> {blog.url}</a>
+                </tr>
+                <div>
+                  likes {blog.likes}
+                  <Button onClick={() => handleVote(blog)}>like</Button>
+                </div>
+                <div>{blog.user && blog.user.name}</div>
+                {canRemove && (
+                  <button onClick={() => handleDelete(blog)}>delete</button>
+                )}
               </div>
-              <div>
-                likes {blog.likes}
-                <button onClick={() => handleVote(blog)}>like</button>
-              </div>
-              <div>{blog.user && blog.user.name}</div>
-              {canRemove && (
-                <button onClick={() => handleDelete(blog)}>delete</button>
-              )}
-            </div>
-          )}
-        </div>
+            )}
+          </div>
+        </tr>
       </tbody>
     </Table>
   )

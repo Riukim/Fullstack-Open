@@ -1,4 +1,7 @@
+import axios from "axios"
+
 let token = null
+const url = "api/users"
 
 const STORAGE_KEY = "loggedBlogAppUser"
 
@@ -23,6 +26,11 @@ const getUser = () => {
 const clearUser = () => {
   localStorage.clear()
   token = null
+}
+
+const getAllUser = async () => {
+  const request = await axios.get(url)
+  return request.data
 }
 
 const getToken = () => token

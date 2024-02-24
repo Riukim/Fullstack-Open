@@ -9,7 +9,8 @@ import {
   Link,
   Navigate,
   useNavigate,
-  useMatch
+  useMatch,
+  Router
 } from "react-router-dom"
 import { Button } from "react-bootstrap"
 
@@ -23,6 +24,7 @@ import Togglable from "./components/Togglable"
 const App = () => {
   const blogs = useSelector((state) => state.blogs)
   const user = useUser()
+  const navigate = useNavigate()
 
   const dispatch = useDispatch()
   const userDispatch = useUserDispatch()
@@ -36,6 +38,7 @@ const App = () => {
   const handleLogout = async () => {
     userDispatch.logout()
     dispatch(createNotification(`${user.name} logged out`, "success", 3))
+    navigate("/login")
   }
 
   if (!user) {
@@ -53,26 +56,34 @@ const App = () => {
       <h2>blogs</h2>
       <Notification />
       <div>
-        {user.name} logged in
+        {user && `${user.name} logged in`}
         <Button onClick={handleLogout}>logout</Button>
       </div>
       <Togglable buttonLabel="new blog" ref={blogFormRef}>
         <NewBlog />
       </Togglable>
-      <div>
-        {blogs
-          .slice()
-          .sort(byLikes)
-          .map((blog) => (
-            <Blog
-              key={blog.id}
-              blog={blog}
-              canRemove={
-                user && blog.user && blog.user.username === user.username
-              }
-            />
-          ))}
-      </div>
+      <Routes>
+        <Route
+          path="/Blogs"
+          element={
+            <div>
+              {blogs
+                .slice()
+                .sort(byLikes)
+                .map((blog) => (
+                  <Blog
+                    key={blog.id}
+                    blog={blog}
+                    canRemove={
+                      user && blog.user && blog.user.username === user.username
+                    }
+                  />
+                ))}
+            </div>
+          }
+        />
+        <Route path="/login" element={<LoginForm />} />
+      </Routes>
     </div>
   )
 }
