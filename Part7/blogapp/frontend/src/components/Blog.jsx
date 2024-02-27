@@ -4,6 +4,7 @@ import { deleteBlog, voteBlog } from "../reducers/blogReducer"
 import { createNotification } from "../reducers/notificationReducer"
 import { useDispatch } from "react-redux"
 import { Table, Button } from "react-bootstrap"
+import { Link } from "react-router-dom"
 
 const Blog = ({ blog, canRemove }) => {
   const [visible, setVisible] = useState(false)
@@ -42,8 +43,8 @@ const Blog = ({ blog, canRemove }) => {
       <tbody>
         <tr>
           <td>
-            {blog.title} {blog.author}
-            <Button onClick={() => setVisible(!visible)}>
+            <Link to={`/blogs/${blog.id}`}>{blog.title}</Link> by {blog.author}
+            {/*<Button onClick={() => setVisible(!visible)}>
               {visible ? "hide" : "show"}
             </Button>
             {visible && (
@@ -55,10 +56,10 @@ const Blog = ({ blog, canRemove }) => {
                 </div>
                 <div>{blog.user && blog.user.name}</div>
                 {canRemove && (
-                  <button onClick={() => handleDelete(blog)}>delete</button>
+                  <Button onClick={() => handleDelete(blog)}>delete</Button>
                 )}
               </div>
-            )}
+            )} */}
           </td>
         </tr>
       </tbody>
