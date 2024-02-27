@@ -38,19 +38,17 @@ const Blog = ({ blog, canRemove }) => {
   }
 
   return (
-    <Table striped>
+    <Table striped bordered>
       <tbody>
         <tr>
-          <div style={style} className="blog">
+          <td>
             {blog.title} {blog.author}
             <Button onClick={() => setVisible(!visible)}>
               {visible ? "hide" : "show"}
             </Button>
             {visible && (
               <div>
-                <tr>
-                  <a href={blog.url}> {blog.url}</a>
-                </tr>
+                <a href={blog.url}> {blog.url}</a>
                 <div>
                   likes {blog.likes}
                   <Button onClick={() => handleVote(blog)}>like</Button>
@@ -61,7 +59,7 @@ const Blog = ({ blog, canRemove }) => {
                 )}
               </div>
             )}
-          </div>
+          </td>
         </tr>
       </tbody>
     </Table>

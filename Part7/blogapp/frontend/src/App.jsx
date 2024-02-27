@@ -20,6 +20,8 @@ import LoginForm from "./components/Login"
 import NewBlog from "./components/NewBlog"
 import Notification from "./components/Notification"
 import Togglable from "./components/Togglable"
+import Users from "./components/Users"
+import User from "./components/User"
 
 const App = () => {
   const blogs = useSelector((state) => state.blogs)
@@ -83,6 +85,8 @@ const App = () => {
           }
         />
         <Route path="/login" element={<LoginForm />} />
+        <Route path="/users" element={<Users />} />
+        <Route path="/users/:userId" element={<User />} />
       </Routes>
     </div>
   )

@@ -1,7 +1,7 @@
 import axios from "axios"
 
 let token = null
-const url = "api/users"
+const url = "/api/users"
 
 const STORAGE_KEY = "loggedBlogAppUser"
 
@@ -36,5 +36,5 @@ const getAllUser = async () => {
 const getToken = () => token
 
 export default {
-  setUser, getUser, clearUser, getToken
+  setUser, getUser, clearUser, getToken, getAllUser
 }
