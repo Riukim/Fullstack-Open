@@ -1,7 +1,10 @@
 const mongoose = require("mongoose")
 
 const commentSchema = mongoose.Schema({
-    comment: String,
+    comment: {
+        type: String,
+        required: true
+    },
     blogs: [
         {
         type: mongoose.Schema.Types.ObjectId,

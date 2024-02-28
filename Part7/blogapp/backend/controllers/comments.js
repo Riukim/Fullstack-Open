@@ -34,7 +34,10 @@ router.post("/:id/comments", async (request, response, next) => {
         blog.comments = blog.comments.concat(savedComment)
         await blog.save()
 
-        response.status(201).json(savedComment.toJSON())
+        response.status(201).json({
+            id: savedComment._id,
+            comment: savedComment.comment,
+        }); 
     } catch (error) {
         next(error)
     }

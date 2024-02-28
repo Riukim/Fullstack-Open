@@ -5,4 +5,9 @@ const getComments = async (blogId) => {
   return request.data
 }
 
-export default getComments
+const createComment = async (blogId, content) => {
+  const request = await axios.post(`/api/blogs/${blogId}/comments`, content)
+  return request.data
+}
+
+export default { getComments, createComment }
