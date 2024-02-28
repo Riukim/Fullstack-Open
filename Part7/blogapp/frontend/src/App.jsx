@@ -68,7 +68,9 @@ const App = () => {
         sticky="top"
       >
         <Container>
-          <Navbar.Brand href="#home">BlogApp</Navbar.Brand>
+          <Navbar.Brand href="#home" as={Link} to="/blogs">
+            BlogApp
+          </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
