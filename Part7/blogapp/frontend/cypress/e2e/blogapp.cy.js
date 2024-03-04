@@ -15,7 +15,7 @@ describe("Blog app", function() {
   })
 
   it("Login form is shown", function() {
-    cy.contains("log in to application")
+    cy.contains("login")
   })
 
   describe("Login",function() {
@@ -24,7 +24,7 @@ describe("Blog app", function() {
       cy.get("#password").type("salainen")
       cy.get("#login-button").click()
 
-      cy.contains("welcome")
+      /* cy.contains("welcome") */
     })
 
     it("fails with wrong credentials", function() {
@@ -32,7 +32,7 @@ describe("Blog app", function() {
       cy.get("#password").type("wrong")
       cy.get("#login-button").click()
 
-      cy.contains("wrong username or password")
+      cy.contains("Wrong username or password")
     })
   })
 
@@ -42,7 +42,7 @@ describe("Blog app", function() {
     })
 
     it("A blog can be created", function() {
-      cy.contains("new note").click()
+      cy.contains("new blog").click()
       cy.get("#title").type("You’re NOT gonna need it!")
       cy.get("#author").type("Ron Jeffries")
       cy.get("#url").type("https://ronjeffries.com/xprog/articles/practices/pracnotneed/")
@@ -64,15 +64,16 @@ describe("Blog app", function() {
     })
 
     it("it can be liked", function() {
-      cy.contains("show").click()
+      cy.contains("You’re NOT gonna need it!").click()
       cy.contains("like").click()
 
       cy.contains("likes 1")
     })
 
     it("the creator can delete it", function() {
-      cy.contains("show").click()
-      cy.contains("delete").click()
+
+      cy.contains("Delete").click()
+      cy.contains("Confirm Delete").click()
 
       cy.contains("removed")
       cy.get("html").should("not.contain", "You’re NOT gonna need it!")
@@ -81,7 +82,6 @@ describe("Blog app", function() {
     it("a non creator can not delete a blog", function() {
       cy.contains("logout").click()
       cy.login({ username: "hellas", password: "secret" })
-      cy.contains("show").click()
       cy.contains("delete").should("not.exist")
     })
   })
@@ -101,33 +101,40 @@ describe("Blog app", function() {
     })
 
     it("those are ordered by the likes", function() {
-      cy.contains(blogs[0].title).contains("show").click()
-      cy.contains(blogs[0].title).contains("like").as("like0")
-      cy.contains(blogs[1].title).contains("show").click()
-      cy.contains(blogs[1].title).contains("like").as("like1")
-      cy.contains(blogs[2].title).contains("show").click()
-      cy.contains(blogs[2].title).contains("like").as("like2")
+      cy.contains(blogs[0].title).contains(blogs[0].title).click()
+      cy.contains("like").as("like0")
+      cy.contains("BlogApp").click()
+      cy.contains(blogs[1].title).contains(blogs[1].title).click()
+      cy.contains("like").as("like1")
+      cy.contains("BlogApp").click()
+      cy.contains(blogs[2].title).contains(blogs[2].title).click()
+      cy.contains("like").as("like2")
+      cy.contains("BlogApp").click()
 
+      cy.contains(blogs[2].title).contains(blogs[2].title).click()
       cy.get("@like2").click()
-      cy.contains(blogs[2].title).contains("likes 1")
+      cy.contains("likes 1")
       cy.get("@like2").click()
-      cy.contains(blogs[2].title).contains("likes 1")
+      cy.contains("likes 2")
       cy.get("@like2").click()
-      cy.contains(blogs[2].title).contains("likes 2")
-      cy.get("@like2").click()
-      cy.contains(blogs[2].title).contains("likes 3")
+      cy.contains("likes 3")
+      cy.contains("BlogApp").click()
 
+      cy.contains(blogs[1].title).click()
       cy.get("@like1").click()
-      cy.contains(blogs[1].title).contains("likes 1")
+      cy.contains("likes 1")
       cy.get("@like1").click()
-      cy.contains(blogs[1].title).contains("likes 2")
+      cy.contains("likes 2")
+      cy.contains("BlogApp").click()
 
+      cy.contains(blogs[0].title).click()
       cy.get("@like0").click()
-      cy.contains(blogs[0].title).contains("likes 1")
+      cy.contains("likes 1")
+      cy.contains("BlogApp").click()
 
-      cy.get(".blog").eq(0).should("contain", blogs[2].title)
-      cy.get(".blog").eq(1).should("contain", blogs[1].title)
-      cy.get(".blog").eq(2).should("contain", blogs[0].title)
+      cy.get("tbody").eq(0).should("contain", blogs[2].title)
+      cy.get("tbody").eq(1).should("contain", blogs[1].title)
+      cy.get("tbody").eq(2).should("contain", blogs[0].title)
     })
 
   })

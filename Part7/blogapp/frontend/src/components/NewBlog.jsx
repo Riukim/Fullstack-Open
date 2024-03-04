@@ -34,7 +34,7 @@ const BlogForm = () => {
 
       <Form onSubmit={addBlog}>
         <Form.Group>
-          <Form.Label>title:</Form.Label>
+          <Form.Label htmlFor="title">title</Form.Label>
           <Form.Control
             id="title"
             placeholder="title"
@@ -44,7 +44,7 @@ const BlogForm = () => {
           />
         </Form.Group>
         <Form.Group>
-          <Form.Label>author</Form.Label>
+          <Form.Label htmlFor="author">author</Form.Label>
           <Form.Control
             id="author"
             placeholder="author"
@@ -54,7 +54,7 @@ const BlogForm = () => {
           />
         </Form.Group>
         <Form.Group>
-          <Form.Label>url</Form.Label>
+          <Form.Label htmlFor="url">url</Form.Label>
           <Form.Control
             id="url"
             placeholder="url"
@@ -63,7 +63,11 @@ const BlogForm = () => {
             style={{ width: "300px" }}
           />
         </Form.Group>
-        <Button type="submit" style={{ margin: "10px" }}>
+        <Button
+          type="submit"
+          style={{ margin: "10px" }}
+          data-testid="create-button"
+        >
           create
         </Button>
       </Form>

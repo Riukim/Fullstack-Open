@@ -54,10 +54,6 @@ const App = () => {
 
   const byLikes = (b1, b2) => b2.likes - b1.likes
 
-  const padding = {
-    padding: 5,
-  }
-
   return (
     <div className="container">
       <Navbar
@@ -81,26 +77,33 @@ const App = () => {
                 Users
               </Nav.Link>
             </Nav>
+            <Nav className="ml-auto">
+              <Navbar.Text>
+                Signed in as: <a>{user && `${user.name}`}</a>
+                <div>
+                  <Button variant="secondary" onClick={handleLogout}>
+                    logout
+                  </Button>
+                </div>
+              </Navbar.Text>
+            </Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>
 
-      <h2>blogs</h2>
       <Notification />
-      <div>
-        {user && `${user.name} logged in`}
-        <Button onClick={handleLogout}>logout</Button>
-      </div>
-      {!match && (
-        <Togglable buttonLabel="new blog" ref={blogFormRef}>
-          <NewBlog />
-        </Togglable>
-      )}
+
       <Routes>
         <Route
           path="/blogs"
           element={
             <div>
+              <h2>Blogs</h2>
+              {!match && (
+                <Togglable buttonLabel="new blog" ref={blogFormRef}>
+                  <NewBlog />
+                </Togglable>
+              )}
               {blogs
                 .slice()
                 .sort(byLikes)

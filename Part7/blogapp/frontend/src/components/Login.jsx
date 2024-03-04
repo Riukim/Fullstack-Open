@@ -41,6 +41,7 @@ const LoginForm = () => {
         <Form.Group>
           <Form.Label>username</Form.Label>
           <Form.Control
+            id="username"
             type="text"
             name="username"
             value={username}
